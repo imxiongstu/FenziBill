@@ -43,7 +43,7 @@ public class FenziBillDomainSharedModule : AbpModule
         Configure<AbpLocalizationOptions>(options =>
         {
             options.Resources
-                .Add<FenziBillResource>("en")
+                .Add<FenziBillResource>("zh-Hans")
                 .AddBaseTypes(typeof(AbpValidationResource))
                 .AddVirtualJson("/Localization/FenziBill");
 
