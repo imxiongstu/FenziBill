@@ -13,7 +13,7 @@ namespace FenziBill.Enums
 
         public enum PayType
         {
-            Cash, WeChat, Alipay, BackCard
+            Cash, WeChat, Alipay, BackCard, Other
         }
     }
 }

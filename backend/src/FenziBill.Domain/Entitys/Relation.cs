@@ -14,8 +14,15 @@ namespace FenziBill.Entitys
     /// </summary>
     public class Relation : Entity<Guid>, IMustHaveCreator
     {
+        /// <summary>
+        /// 关系名
+        /// </summary>
         public string Name { get; set; }
-
         public Guid CreatorId { get; set; }
+
+        public Relation(string name)
+        {
+            Name = name;
+        }
     }
 }

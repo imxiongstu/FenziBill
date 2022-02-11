@@ -11,7 +11,7 @@ namespace FenziBill.Entitys
     /// <summary>
     /// 账本
     /// </summary>
-    public class AccountBook : AuditedAggregateRoot<Guid>
+    public class AccountBook : FullAuditedAggregateRoot<Guid>
     {
         /// <summary>
         /// 账本名
@@ -30,6 +30,14 @@ namespace FenziBill.Entitys
             AccountBookLines = new List<AccountBookLine>();
         }
 
+        /// <summary>
+        /// 添加账本明细
+        /// </summary>
+        /// <param name="relationId"></param>
+        /// <param name="personName"></param>
+        /// <param name="money"></param>
+        /// <param name="type"></param>
+        /// <param name="payType"></param>
         public void AddAccountBookLine
             (
             Guid relationId,
@@ -40,6 +48,16 @@ namespace FenziBill.Entitys
             )
         {
             AccountBookLines.Add(new AccountBookLine(Id, relationId, personName, money, type, payType));
+        }
+
+        /// <summary>
+        /// 添加账本明细
+        /// </summary>
+        /// <param name="accountBookLine"></param>
+        public void AddAccountBookLine(AccountBookLine accountBookLine)
+        {
+            accountBookLine.AccountBookId = Id;
+            AccountBookLines.Add(accountBookLine);
         }
     }
 }

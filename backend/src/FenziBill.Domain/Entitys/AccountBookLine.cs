@@ -13,7 +13,7 @@ namespace FenziBill.Entitys
     /// <summary>
     /// 账本明细
     /// </summary>
-    public class AccountBookLine : Entity<Guid>, IHasCreationTime, ISoftDelete
+    public class AccountBookLine : Entity<Guid>, IHasCreationTime, IHasDeletionTime, ISoftDelete
     {
         public Guid AccountBookId { get; set; }
         public Guid RelationId { get; set; }
@@ -39,6 +39,7 @@ namespace FenziBill.Entitys
         public string Remark { get; set; }
         public DateTime CreationTime { get; set; }
         public bool IsDeleted { get; set; }
+        public DateTime? DeletionTime { get; set; }
 
         public AccountBookLine
             (
@@ -57,6 +58,5 @@ namespace FenziBill.Entitys
             Type = type;
             PayType = payType;
         }
-
     }
 }
