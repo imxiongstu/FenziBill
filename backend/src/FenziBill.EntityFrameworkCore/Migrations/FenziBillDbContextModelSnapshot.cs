@@ -92,6 +92,10 @@ namespace FenziBill.Migrations
                         .HasColumnType("datetime(6)")
                         .HasColumnName("CreationTime");
 
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("CreatorId");
+
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("DeletionTime");
@@ -120,6 +124,9 @@ namespace FenziBill.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<DateTime?>("Time")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
@@ -137,7 +144,7 @@ namespace FenziBill.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("CreatorId")
+                    b.Property<Guid?>("CreatorId")
                         .HasColumnType("char(36)")
                         .HasColumnName("CreatorId");
 

@@ -1,5 +1,10 @@
 ﻿using FenziBill.Entitys;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using System;
+using System.Diagnostics;
+using System.Linq.Expressions;
+using Volo.Abp.Auditing;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -13,6 +18,7 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.Users;
 
 namespace FenziBill.EntityFrameworkCore;
 
@@ -42,6 +48,9 @@ public class FenziBillDbContext :
     public DbSet<AccountBookLine> AccountBookLines { get; set; }
     public DbSet<Relation> Relations { get; set; }
 
+
+    public ICurrentUser CurrentUser => LazyServiceProvider.LazyGetRequiredService<ICurrentUser>();
+
     public FenziBillDbContext(DbContextOptions<FenziBillDbContext> options)
         : base(options)
     {
@@ -61,5 +70,40 @@ public class FenziBillDbContext :
         builder.ConfigureIdentityServer();
         builder.ConfigureFeatureManagement();
         builder.ConfigureTenantManagement();
+    }
+
+    protected bool IMayHaveCreatorFilterEnabled => DataFilter?.IsEnabled<IMayHaveCreator>() ?? false;
+
+    protected override bool ShouldFilterEntity<TEntity>(IMutableEntityType entityType)
+    {
+        //如果不是HttpApi服务，则禁用过滤
+        if (Process.GetCurrentProcess().ProcessName != "FenziBill.HttpApi.Host")
+        {
+            return false;
+        }
+
+        if (typeof(IMayHaveCreator).IsAssignableFrom(typeof(TEntity)))
+        {
+            return true;
+        }
+
+        return base.ShouldFilterEntity<TEntity>(entityType);
+    }
+
+    protected override Expression<Func<TEntity, bool>> CreateFilterExpression<TEntity>()
+    {
+        var expression = base.CreateFilterExpression<TEntity>();
+
+        ////实现用户数据隔离过滤
+        if (typeof(IMayHaveCreator).IsAssignableFrom(typeof(TEntity)))
+        {
+            Expression<Func<TEntity, bool>> isActiveFilter =
+            e => !IMayHaveCreatorFilterEnabled || EF.Property<Guid>(e, "CreatorId") == CurrentUser.Id;
+            expression = expression == null
+                ? isActiveFilter
+                : CombineExpressions(expression, isActiveFilter);
+        }
+
+        return expression;
     }
 }

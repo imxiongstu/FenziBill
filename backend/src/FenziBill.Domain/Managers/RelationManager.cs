@@ -14,10 +14,16 @@ namespace FenziBill.Managers
     {
 
         private readonly IRepository<Relation, Guid> _relationRepository;
+        private readonly IRepository<AccountBookLine, Guid> _accountBookLineRepository;
 
-        public RelationManager(IRepository<Relation, Guid> relationRepository)
+        public RelationManager
+            (
+            IRepository<Relation, Guid> relationRepository,
+            IRepository<AccountBookLine, Guid> accountBookLineRepository
+            )
         {
             _relationRepository = relationRepository;
+            _accountBookLineRepository = accountBookLineRepository;
         }
 
         public async Task<Relation> CreateRelationAsync(Relation relation)
@@ -28,6 +34,22 @@ namespace FenziBill.Managers
             }
 
             return await _relationRepository.InsertAsync(relation);
+        }
+
+
+        /// <summary>
+        /// 删除关系
+        /// </summary>
+        /// <param name="relation"></param>
+        /// <returns></returns>
+        public async Task DeleteRelationAsync(Relation relation)
+        {
+            if (await _accountBookLineRepository.AnyAsync(o => o.RelationId == relation.Id))
+            {
+                throw new UserFriendlyException("此关系存在账单明细中，无法删除！");
+            }
+
+            await _relationRepository.DeleteAsync(relation);
         }
     }
 }

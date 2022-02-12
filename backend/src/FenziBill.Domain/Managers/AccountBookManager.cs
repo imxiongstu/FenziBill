@@ -16,6 +16,7 @@ namespace FenziBill.Managers
     public class AccountBookManager : DomainService
     {
         private readonly IRepository<AccountBook, Guid> _accountBookRepository;
+
         public AccountBookManager(IRepository<AccountBook, Guid> accountBookRepository)
         {
             _accountBookRepository = accountBookRepository;
@@ -72,6 +73,13 @@ namespace FenziBill.Managers
         }
 
 
+
+        /// <summary>
+        /// 创建账本明细
+        /// </summary>
+        /// <param name="accountBookId"></param>
+        /// <param name="accountBookLine"></param>
+        /// <returns></returns>
         public async Task<AccountBookLine> CreateAccountBookLineAsync(Guid accountBookId, AccountBookLine accountBookLine)
         {
             var accountBook = await GetAccountBookById(accountBookId);

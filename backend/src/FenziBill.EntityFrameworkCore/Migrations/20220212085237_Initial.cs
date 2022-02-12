@@ -895,7 +895,7 @@ namespace FenziBill.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Name = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatorId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    CreatorId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
@@ -1309,11 +1309,13 @@ namespace FenziBill.Migrations
                     Money = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     PayType = table.Column<int>(type: "int", nullable: false),
+                    Time = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     Remark = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreatorId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {

@@ -13,6 +13,7 @@ namespace FenziBill.AccountBooks.Dtos
         public decimal Money { get; set; }
         public AccountBookLineEnum.Type Type { get; set; }
         public AccountBookLineEnum.PayType PayType { get; set; }
+        public DateTime? Time { get; set; }
         public string Remark { get; set; }
     }
 }

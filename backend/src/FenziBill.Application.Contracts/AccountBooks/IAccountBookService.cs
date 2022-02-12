@@ -27,6 +27,11 @@ namespace FenziBill.AccountBooks
         /// <param name="dto"></param>
         /// <returns></returns>
         Task<AccountBookLineResultDto> CreateAccountBookLineAsync(AccountBookLineCreateDto dto);
-
+        /// <summary>
+        /// 获取账单明细
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        Task<PagedResultDto<AccountBookLineResultDto>> GetAllAccountBookLineAsync(AccountBookLineGetDto dto);
     }
 }

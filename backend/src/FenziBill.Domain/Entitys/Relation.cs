@@ -12,16 +12,17 @@ namespace FenziBill.Entitys
     /// <summary>
     /// 关系
     /// </summary>
-    public class Relation : Entity<Guid>, IMustHaveCreator
+    public class Relation : Entity<Guid>, IMayHaveCreator
     {
         /// <summary>
         /// 关系名
         /// </summary>
         public string Name { get; set; }
-        public Guid CreatorId { get; set; }
+        public Guid? CreatorId { get; set; }
 
-        public Relation(string name)
+        public Relation(Guid id, string name)
         {
+            Id = id;
             Name = name;
         }
     }

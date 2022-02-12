@@ -24,8 +24,9 @@ namespace FenziBill.Entitys
 
         public ICollection<AccountBookLine> AccountBookLines { get; set; }
 
-        public AccountBook(string name)
+        public AccountBook(Guid id, string name)
         {
+            Id = id;
             Name = name;
             AccountBookLines = new List<AccountBookLine>();
         }
@@ -40,14 +41,29 @@ namespace FenziBill.Entitys
         /// <param name="payType"></param>
         public void AddAccountBookLine
             (
+            Guid id,
             Guid relationId,
             string personName,
             decimal money,
             AccountBookLineEnum.Type type,
-            AccountBookLineEnum.PayType payType
+            AccountBookLineEnum.PayType payType,
+            DateTime? time
             )
         {
-            AccountBookLines.Add(new AccountBookLine(Id, relationId, personName, money, type, payType));
+            AccountBookLine accountBookLine = new AccountBookLine
+                (
+                id,
+                Id,
+                relationId,
+                personName,
+                money,
+                type,
+                payType
+                );
+
+            accountBookLine.Time = time;
+
+            AccountBookLines.Add(accountBookLine);
         }
 
         /// <summary>
