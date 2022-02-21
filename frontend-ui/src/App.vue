@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app';
+import { useRequestInterceptor } from './common/request';
+
 onLaunch(() => {
-    console.log('App Launch');
+    useRequestInterceptor();
 });
-onShow(() => {
-    console.log('App Show');
-});
-onHide(() => {
-    console.log('App Hide');
-});
+onShow(() => {});
+onHide(() => {});
 </script>
 
 <style lang="scss">

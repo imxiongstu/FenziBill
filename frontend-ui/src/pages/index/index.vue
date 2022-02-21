@@ -8,10 +8,11 @@
 </template>
 
 <script setup lang="ts">
-import { getCurrentInstance } from 'vue';
+import { useStore } from 'Vuex';
+const store = useStore();
 
 const handleClick = () => {
-    console.log(getCurrentInstance());
+    store.dispatch('user/setCount');
 };
 </script>
 

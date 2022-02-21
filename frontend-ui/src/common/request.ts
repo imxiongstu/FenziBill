@@ -1,15 +1,31 @@
-export function request(url: string, method: UniApp.RequestOptions["method"]) {
-    uni.request({
+export function request(url: string, method: UniApp.RequestOptions["method"], data: any, header: UniApp.RequestOptions["header"]) {
+    return uni.request({
         url: url,
         method: method,
-        data: {
-            text: 'uni.request'
-        },
-        header: {
-            'custom-header': 'hello' //自定义请求头信息
-        },
-        success: (res) => {
-            console.log(res.data);
-        }
+        data: data,
+        header: header
     });
+}
+
+
+/**
+ * @description: Http请求拦截器
+ * @param {*}
+ * @return {*}
+ */
+export function useRequestInterceptor(): void {
+    uni.addInterceptor('request', {
+        invoke(args) {
+            console.log(args);
+        },
+        success(args) {
+
+        },
+        fail(err) {
+
+        },
+        complete(res) {
+
+        }
+    })
 }
