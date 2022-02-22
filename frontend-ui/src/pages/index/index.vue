@@ -8,12 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from 'Vuex';
-const store = useStore();
-
-const handleClick = () => {
-    store.dispatch('user/setCount');
-};
 </script>
 
 <style lang="scss">

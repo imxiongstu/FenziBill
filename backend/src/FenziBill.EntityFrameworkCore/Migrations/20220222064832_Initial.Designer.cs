@@ -12,7 +12,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace FenziBill.Migrations
 {
     [DbContext(typeof(FenziBillDbContext))]
-    [Migration("20220212085237_Initial")]
+    [Migration("20220222064832_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

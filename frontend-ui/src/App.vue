@@ -3,6 +3,15 @@ import { onLaunch, onShow, onHide } from '@dcloudio/uni-app';
 import { useRequestInterceptor } from './common/request';
 
 onLaunch(() => {
+    uni.getStorage({
+        key: 'FenziBill-Token',
+        fail: () => {
+            uni.reLaunch({
+                url: '/pages/login/index',
+            });
+        },
+    });
+
     useRequestInterceptor();
 });
 onShow(() => {});

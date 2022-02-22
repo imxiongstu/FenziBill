@@ -144,16 +144,16 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
 
 
         // UI Client
-        var uiClientId = configurationSection["FenziBill_Backend_UI:ClientId"];
+        var uiClientId = configurationSection["FenziBill_App:ClientId"];
         if (!uiClientId.IsNullOrWhiteSpace())
         {
-            var webClientRootUrl = configurationSection["FenziBill_Backend_UI:RootUrl"]?.TrimEnd('/');
+            var webClientRootUrl = configurationSection["FenziBill_App:RootUrl"]?.TrimEnd('/');
 
             await CreateClientAsync(
                 name: uiClientId,
                 scopes: commonScopes,
                 grantTypes: new[] { "password", "client_credentials", "authorization_code" },
-                secret: (configurationSection["FenziBill_Backend_UI:ClientSecret"] ?? "1q2w3e*").Sha256(),
+                secret: (configurationSection["FenziBill_App:ClientSecret"] ?? "1q2w3e*").Sha256(),
                 requireClientSecret: false,
                 redirectUri: webClientRootUrl,
                 postLogoutRedirectUri: webClientRootUrl,

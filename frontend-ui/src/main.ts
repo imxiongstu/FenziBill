@@ -7,7 +7,6 @@ import { request } from "./common/request";
 export function createApp() {
   const app = createSSRApp(App);
   app.use(store);
-
   return {
     app,
   };
