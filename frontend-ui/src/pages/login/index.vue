@@ -6,15 +6,15 @@
         </view>
         <view class="form-box">
             <!-- 表单部分 -->
-            <uni-forms @submit="handleFormSubmit">
-                <uni-forms-item>
-                    <uni-easyinput :inputBorder="false" class="form-box-input" placeholder="请输入用户名"></uni-easyinput>
+            <uni-forms>
+                <uni-forms-item :modelValue="form">
+                    <uni-easyinput v-model="form.username" :inputBorder="false" class="form-box-input" placeholder="请输入用户名"></uni-easyinput>
                 </uni-forms-item>
                 <uni-forms-item>
-                    <uni-easyinput type="password" :inputBorder="false" class="form-box-input" placeholder="请输入密码"></uni-easyinput>
+                    <uni-easyinput v-model="form.password" type="password" :inputBorder="false" class="form-box-input" placeholder="请输入密码"></uni-easyinput>
                 </uni-forms-item>
                 <navigator class="form-box-forgetpwd">忘记密码？</navigator>
-                <button class="form-box-submit uni-shadow-base" form-type="submit">登陆</button>
+                <button class="form-box-submit uni-shadow-base" @click="handleFormSubmit">登陆</button>
                 <navigator class="form-box-register">还没有账号？点击注册</navigator>
             </uni-forms>
         </view>
@@ -22,8 +22,40 @@
 </template>
 
 <script setup lang="ts">
-const handleFormSubmit = (e: any) => {
-    console.log('form submit');
+import { ILoginForm } from '@/interfaces/ILoginForm';
+import { reactive } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+
+const form = reactive<ILoginForm>({
+    username: '',
+    password: '',
+    grant_type: 'password',
+    client_id: import.meta.env.VITE_APP_CLIENTID as string,
+});
+
+const handleFormSubmit = () => {
+    store
+        .dispatch('user/login', form)
+        .then(() => {
+            //跳转至首页
+            uni.switchTab({
+                url: '/pages/index/index',
+            });
+
+            uni.showToast({
+                title: '登录成功',
+                duration: 2000,
+            });
+        })
+        .catch((err) => {
+            uni.showToast({
+                title: '登录失败',
+                icon: 'error',
+                duration: 2000,
+            });
+        });
 };
 </script>
 

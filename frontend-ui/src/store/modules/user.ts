@@ -25,7 +25,9 @@ const actions = {
         return new Promise((resolve, reject) => {
             ApiHub.login(userLoginForm).then((res: any) => {
                 let token = res.access_token;
+                //设置Token至Vuex状态
                 commit('SET_TOKEN', token);
+                //设置Token至LocalStorage
                 uni.setStorage({ key: "FenziBill-Token", data: token })
                 resolve(res);
             }).catch((err: any) => {
