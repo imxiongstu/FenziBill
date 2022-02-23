@@ -8,6 +8,16 @@
 </template>
 
 <script setup lang="ts">
+import { ApiHub } from '@/common/api-hub';
+import { useStore } from 'vuex';
+
+const store = useStore();
+
+const handleClick = () => {
+    store.dispatch('user/getUserInfo').then((res) => {
+        console.log(res);
+    });
+};
 </script>
 
 <style lang="scss">

@@ -1,3 +1,6 @@
+import store from "@/store";
+import { getStorageToken } from "./auth";
+
 const BaseUrl = import.meta.env.VITE_API_BASEURL;
 
 /**
@@ -10,7 +13,7 @@ export function request(
     data?: any, header?: UniApp.RequestOptions["header"]): Promise<any> {
     return new Promise((resolve, reject) => {
         uni.request({
-            url: BaseUrl + url,
+            url: url,
             method: method,
             data: data,
             header: header,
@@ -37,7 +40,13 @@ export function request(
 export function useRequestInterceptor(): void {
     uni.addInterceptor('request', {
         invoke(args) {
-            console.log(args);
+            args.header = args.header ?? {};
+            args.url = BaseUrl + args.url;
+
+            //如果存在Token，则使用Token进行请求
+            if (store.getters['user/GET_TOKEN']) {
+                args.header['Authorization'] = `Bearer ${getStorageToken()}`;
+            }
         },
         success(args) {
 

@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app';
 import { useRequestInterceptor } from './common/request';
-import { getStorageToken } from './common/auth';
+import { checkLogin } from './common/auth';
 
 onLaunch(() => {
-    if (!getStorageToken()) {
-        uni.reLaunch({
-            url: '/pages/login/index',
-        });
-    }
+    //启用拦截器
     useRequestInterceptor();
+    //登录状态检查
+    checkLogin();
 });
 onShow(() => {});
 onHide(() => {});
