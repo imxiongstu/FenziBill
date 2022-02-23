@@ -94,9 +94,10 @@ public class FenziBillDbContext :
     {
         var expression = base.CreateFilterExpression<TEntity>();
 
-        ////实现用户数据隔离过滤
+        //实现用户数据隔离过滤
         if (typeof(IMayHaveCreator).IsAssignableFrom(typeof(TEntity)))
         {
+            //只筛选出CreatorId为当前用户Id的数据
             Expression<Func<TEntity, bool>> isActiveFilter =
             e => !IMayHaveCreatorFilterEnabled || EF.Property<Guid>(e, "CreatorId") == CurrentUser.Id;
             expression = expression == null

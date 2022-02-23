@@ -29,6 +29,12 @@
 			"style": {
 				"navigationBarTitleText": "登录"
 			}
+		},
+		{
+			"path": "pages/relation/index",
+			"style": {
+				"navigationBarTitleText": "关系"
+			}
 		}
 	],
 	"globalStyle": {
@@ -51,6 +57,11 @@
 				"pagePath": "pages/accountBook/index",
 				"iconPath": "static/icon/accountBook.png",
 				"text": "账本"
+			},
+			{
+				"pagePath": "pages/relation/index",
+				"iconPath": "static/icon/relation.png",
+				"text": "关系"
 			},
 			{
 				"pagePath": "pages/my/index",

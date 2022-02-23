@@ -1,11 +1,14 @@
 ﻿using FenziBill.Entitys;
 using FenziBill.Managers;
 using FenziBill.Relations.Dtos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.Domain.Repositories;
 using Volo.Abp.ObjectMapping;
 
 namespace FenziBill.Relations
@@ -13,10 +16,16 @@ namespace FenziBill.Relations
     public class RelationService : FenziBillAppService, IRelationService
     {
         private readonly RelationManager _relationManager;
+        private readonly IRepository<Relation, Guid> _relationRepository;
 
-        public RelationService(RelationManager relationManager)
+        public RelationService
+            (
+            RelationManager relationManager,
+            IRepository<Relation, Guid> relationRepository
+            )
         {
             _relationManager = relationManager;
+            _relationRepository = relationRepository;
         }
 
 
@@ -28,6 +37,21 @@ namespace FenziBill.Relations
             await _relationManager.CreateRelationAsync(relation);
 
             return ObjectMapper.Map<Relation, RelationResultDto>(relation);
+        }
+
+
+
+
+        public async Task<PagedResultDto<RelationResultDto>> GetAllRelationAsync(RelationGetDto dto)
+        {
+            var query = (await _relationRepository.GetQueryableAsync());
+
+            var totalCount = await query.CountAsync();
+
+            var items = await query.PageBy(dto.SkipCount, dto.MaxResultCount)
+                .ToListAsync();
+
+            return new PagedResultDto<RelationResultDto>(totalCount, ObjectMapper.Map<List<Relation>, List<RelationResultDto>>(items));
         }
     }
 }
