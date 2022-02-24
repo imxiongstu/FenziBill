@@ -38,6 +38,7 @@ const changeRelationDialog = ref();
 const relationList = ref([]);
 const currentRelationId = ref('');
 
+//列表框的左滑按钮选项
 const leftOptions = [
     {
         text: '重命名',

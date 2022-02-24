@@ -31,9 +31,12 @@ export function checkLogin(): void {
     if (!hasUserInfo) {
         //如果不存在用户信息，说明未登录，但可能存在Token，尝试用Token获取一遍用户信息
         if (store.getters['user/GET_TOKEN']) {
-            store.dispatch('user/getUserInfo');
+            store.dispatch('user/getUserInfo').catch(() => {
+                uni.reLaunch({
+                    url: '/pages/login/index',
+                });
+            });
         } else {
-            //如果获取用户信息失败，则跳转至登录页
             uni.reLaunch({
                 url: '/pages/login/index',
             });
