@@ -26,13 +26,17 @@ export function setStorageToken(value: string): void {
  * @return {*}
  */
 export function checkLogin(): void {
+    const hasUserInfo = store.getters['user/GET_USERID'];
     //如果存在用户信息,说明已经登录
-    if (!store.getters['user/GET_USERID']) {
+    if (!hasUserInfo) {
         //如果不存在用户信息，说明未登录，但可能存在Token，尝试用Token获取一遍用户信息
-        store.dispatch('user/getUserInfo').catch(() => {
+        if (store.getters['user/GET_TOKEN']) {
+            store.dispatch('user/getUserInfo');
+        } else {
+            //如果获取用户信息失败，则跳转至登录页
             uni.reLaunch({
                 url: '/pages/login/index',
             });
-        });
+        }
     }
 };

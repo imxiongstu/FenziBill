@@ -26,6 +26,32 @@ namespace FenziBill.Managers
             _accountBookLineRepository = accountBookLineRepository;
         }
 
+
+        /// <summary>
+        /// 通过Id获取关系
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="UserFriendlyException"></exception>
+        public async Task<Relation> GetRelationById(Guid id)
+        {
+            var relation = await _relationRepository.FirstOrDefaultAsync(o => o.Id == id);
+
+            if (relation == null)
+            {
+                throw new UserFriendlyException("未找到该Id的关系");
+            }
+
+            return relation;
+        }
+
+
+        /// <summary>
+        /// 创建关系
+        /// </summary>
+        /// <param name="relation"></param>
+        /// <returns></returns>
+        /// <exception cref="UserFriendlyException"></exception>
         public async Task<Relation> CreateRelationAsync(Relation relation)
         {
             if (await _relationRepository.AnyAsync(o => o.Name == relation.Name))
@@ -50,6 +76,28 @@ namespace FenziBill.Managers
             }
 
             await _relationRepository.DeleteAsync(relation);
+        }
+
+
+
+        /// <summary>
+        /// 改变关系名称通过Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newName"></param>
+        /// <returns></returns>
+        public async Task<Relation> ChangeRelationName(Guid id, string newName)
+        {
+            var relation = await GetRelationById(id);
+
+            if (await _relationRepository.AnyAsync(o => o.Name == newName && o.Id != id))
+            {
+                throw new UserFriendlyException("该关系名称已经存在！");
+            }
+
+            relation.Name = newName;
+
+            return await _relationRepository.UpdateAsync(relation);
         }
     }
 }

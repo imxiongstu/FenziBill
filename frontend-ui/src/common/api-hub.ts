@@ -1,13 +1,11 @@
-/**
- * API集线
- * 集中管理API接口
- */
-
-
 import { ILoginForm } from "@/interfaces/ILoginForm";
 import { request } from "./request";
 
 
+
+/**
+ * @description 所有的接口请求集线
+ */
 export class ApiHub {
 
     /**
@@ -45,6 +43,26 @@ export class ApiHub {
      */
     public static getAllRelation(skipCount?: number, maxResultCount?: number): Promise<any> {
         return request(`/api/app/relation/relation?SkipCount=${skipCount ?? 0}&MaxResultCount=${maxResultCount ?? 100}`, 'GET');
+    }
+
+    /**
+     * @description: 删除关系
+     * @param {number} id
+     * @return {*}
+     */
+    public static deleteRelation(id: string): Promise<any> {
+        return request(`/api/app/relation/${id}/relation`, 'DELETE');
+    }
+
+
+    /**
+     * @description: 删除关系
+     * @param {number} id
+     * @param {string} newName
+     * @return {*}
+     */
+    public static changeRelationName(id: string, newName: string): Promise<any> {
+        return request(`/api/app/relation/${id}/change-relation-name?newName=${newName}`, 'POST');
     }
 }
 

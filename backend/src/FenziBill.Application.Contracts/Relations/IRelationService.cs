@@ -21,5 +21,18 @@ namespace FenziBill.Relations
         /// <param name="dto"></param>
         /// <returns></returns>
         Task<PagedResultDto<RelationResultDto>> GetAllRelationAsync(RelationGetDto dto);
+        /// <summary>
+        /// 通过Id删除关系
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task DeleteRelationAsync(Guid id);
+        /// <summary>
+        /// 修改关系名称
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newName"></param>
+        /// <returns></returns>
+        Task<RelationResultDto> ChangeRelationName(Guid id, string newName);
     }
 }

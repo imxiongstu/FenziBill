@@ -3,10 +3,10 @@ import { ApiHub } from '@/common/api-hub';
 import { getStorageToken, setStorageToken } from "@/common/auth";
 
 const state = {
-    token: getStorageToken(),//初始化的时候读取Storeage里的Token
-    userName: '',
-    userRole: '',
-    userId: ''
+    token: getStorageToken() || null,//初始化的时候读取Storeage里的Token
+    userName: null,
+    userRole: null,
+    userId: null
 }
 
 const mutations = {

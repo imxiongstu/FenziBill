@@ -18,9 +18,19 @@ export function request(
             data: data,
             header: header,
             success: (res) => {
-                if (res.statusCode === 200) {
+                if (res.statusCode === 200 || res.statusCode === 204) {
                     resolve(res.data);
+                } else if (res.statusCode === 401) {
+                    uni.showToast({
+                        title: '你无权限请求接口',
+                        icon: "none"
+                    });
+                    reject(res);
                 } else {
+                    uni.showToast({
+                        title: (res.data as any).error.message,
+                        icon: "none"
+                    });
                     reject(res);
                 }
             },
@@ -47,15 +57,6 @@ export function useRequestInterceptor(): void {
             if (store.getters['user/GET_TOKEN']) {
                 args.header['Authorization'] = `Bearer ${getStorageToken()}`;
             }
-        },
-        success(args) {
-
-        },
-        fail(err) {
-
-        },
-        complete(res) {
-
         }
     })
 }

@@ -53,5 +53,25 @@ namespace FenziBill.Relations
 
             return new PagedResultDto<RelationResultDto>(totalCount, ObjectMapper.Map<List<Relation>, List<RelationResultDto>>(items));
         }
+
+
+
+
+        public async Task DeleteRelationAsync(Guid id)
+        {
+            var relation = await _relationManager.GetRelationById(id);
+
+            await _relationManager.DeleteRelationAsync(relation);
+        }
+
+
+
+
+        public async Task<RelationResultDto> ChangeRelationName(Guid id, string newName)
+        {
+            var relation = await _relationManager.ChangeRelationName(id, newName);
+
+            return ObjectMapper.Map<Relation, RelationResultDto>(relation);
+        }
     }
 }
