@@ -1,0 +1,50 @@
+version: '2'
+services:
+# 网关服务
+  fenzibill_publicgateway:
+    container_name: fenzibill_publicgateway
+    build: 
+      context: .
+      dockerfile: dockerfile.publicgateway
+    ports:
+      - 11220:80
+    networks:
+      - fenzibill_network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - TZ=Asia/Shanghai
+    stdin_open: true
+    tty: true
+# IdentityServer服务
+  fenzibill_identityserver:
+    container_name: fenzibill_identityserver
+    build: 
+      context: .
+      dockerfile: dockerfile.identityserver
+    ports:
+      - 11221:80
+    networks:
+      - fenzibill_network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - TZ=Asia/Shanghai
+    stdin_open: true
+    tty: true
+# HttpApi服务
+  fenzibill_httpapi:
+    container_name: fenzibill_httpapi
+    build:
+      context: .
+      dockerfile: dockerfile.httpapi
+    ports:
+      - 11222:80
+    networks:
+      - fenzibill_network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - TZ=Asia/Shanghai
+    stdin_open: true
+    tty: true
+networks:
+  fenzibill_network:
+    driver: bridge
