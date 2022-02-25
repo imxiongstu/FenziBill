@@ -7,6 +7,8 @@ namespace FenziBill.AccountBooks.Dtos
 {
     public class AccountBookLineResultDto
     {
+        public Guid? AccountBookId { get; set; }
+        public string AccountBookName { get; set; }
         public Guid Id { get; set; }
         public string RelationName { get; set; }
         public string PersonName { get; set; }

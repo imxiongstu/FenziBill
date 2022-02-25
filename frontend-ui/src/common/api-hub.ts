@@ -56,13 +56,27 @@ export class ApiHub {
 
 
     /**
-     * @description: 删除关系
+     * @description: 修改关系名称
      * @param {number} id
      * @param {string} newName
      * @return {*}
      */
     public static changeRelationName(id: string, newName: string): Promise<any> {
         return request(`/api/app/relation/${id}/change-relation-name?newName=${newName}`, 'POST');
+    }
+
+
+    /**
+     * @description: 获取所有账本明细
+     * @param {string} accountBookId
+     * @param {*} sorting
+     * @param {number} skipCount
+     * @param {number} maxResultCount
+     * @return {*}
+     */
+    public static getAllAccountBookLine(accountBookId?: string, sorting?: "CreationTime DESC" | "Money ASC" | "Money DESC", skipCount?: number, maxResultCount?: number): Promise<any> {
+        return request(`/api/app/account-book/account-book-line?
+        AccountBookId=${accountBookId ?? null}&Sorting=${sorting ?? null}&SkipCount=${skipCount ?? 0}&MaxResultCount=${maxResultCount ?? 100}`, 'GET');
     }
 }
 

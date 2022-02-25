@@ -22,16 +22,28 @@ namespace FenziBill.AccountBooks
         /// <returns></returns>
         Task DeleteAccountBookAsync(Guid id);
         /// <summary>
-        /// 创建账单明细
+        /// 创建账本明细
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
         Task<AccountBookLineResultDto> CreateAccountBookLineAsync(AccountBookLineCreateDto dto);
         /// <summary>
-        /// 获取账单明细
+        /// 获取账本明细
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
         Task<PagedResultDto<AccountBookLineResultDto>> GetAllAccountBookLineAsync(AccountBookLineGetDto dto);
+        /// <summary>
+        /// 获取账本
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        Task<PagedResultDto<AccountBookResultDto>> GetAllAccountBookAsync(AccountBookGetDto dto);
+        /// <summary>
+        /// 修改账本
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        Task<AccountBookResultDto> UpdateAccountBookAsync(AccountBookUpdateDto dto);
     }
 }

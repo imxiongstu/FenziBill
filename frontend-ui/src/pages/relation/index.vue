@@ -5,16 +5,16 @@
             <uni-list>
                 <uni-swipe-action>
                     <view>
-                        <uni-swipe-action-item @click="handleSwipeClick($event,item.id)" v-for="item in relationList" :key="item.id" :right-options="leftOptions">
+                        <uni-swipe-action-item @click="handleSwipeClick($event,item['id'])" v-for="item in relationList" :key="item['id']" :right-options="leftOptions">
                             <view>
-                                <uni-list-item :title="item.name" :show-badge="true" badge-text="0" :thumb="thumb" thumb-size="sm"></uni-list-item>
+                                <uni-list-item :title="item['name']" :show-badge="true" badge-text="0" :thumb="thumb" thumb-size="sm"></uni-list-item>
                             </view>
                         </uni-swipe-action-item>
                     </view>
                 </uni-swipe-action>
             </uni-list>
         </view>
-        <uni-fab horizontal="right" vertical="bottom" :direction="direction" @fabClick="handleCreate"></uni-fab>
+        <uni-fab horizontal="right" vertical="bottom" @fabClick="handleCreate"></uni-fab>
         <!-- 添加关系弹窗 -->
         <uni-popup ref="createRelationDialog" type="center">
             <uni-popup-dialog mode="input" title="新建" placeholder="请输入关系名（例：朋友）" @confirm="handleCreateDialogConfirm"></uni-popup-dialog>

@@ -57,6 +57,25 @@ namespace FenziBill.Managers
             return await _accountBookRepository.InsertAsync(accountBook);
         }
 
+
+
+        /// <summary>
+        /// 更新修改账本
+        /// </summary>
+        /// <param name="accountBook"></param>
+        /// <returns></returns>
+        public async Task<AccountBook> UpdateAccountBookAsync(AccountBook accountBook)
+        {
+            if (await _accountBookRepository.AnyAsync(o => o.Name == accountBook.Name && o.Id != accountBook.Id))
+            {
+                throw new UserFriendlyException("已存在相同账本名称！");
+            }
+
+            return await _accountBookRepository.UpdateAsync(accountBook);
+        }
+
+
+
         /// <summary>
         /// 删除账本
         /// </summary>
