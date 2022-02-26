@@ -76,7 +76,30 @@ export class ApiHub {
      */
     public static getAllAccountBookLine(accountBookId?: string, sorting?: "CreationTime DESC" | "Money ASC" | "Money DESC", skipCount?: number, maxResultCount?: number): Promise<any> {
         return request(`/api/app/account-book/account-book-line?
-        AccountBookId=${accountBookId ?? null}&Sorting=${sorting ?? null}&SkipCount=${skipCount ?? 0}&MaxResultCount=${maxResultCount ?? 100}`, 'GET');
+        AccountBookId=${accountBookId ?? null}&Sorting=${sorting ?? ''}&SkipCount=${skipCount ?? 0}&MaxResultCount=${maxResultCount ?? 100}`, 'GET');
+    }
+
+
+
+    /**
+     * @description: 创建账本
+     * @param {object} form
+     * @return {*}
+     */
+    public static createAccountBook(form: { name: string, remark: string }): Promise<any> {
+        return request('/api/app/account-book/account-book', 'POST', form);
+    }
+
+
+    /**
+     * @description: 获取账本
+     * @param {string} accountBookId
+     * @param {number} skipCount
+     * @param {number} maxResultCount
+     * @return {*}
+     */
+    public static getAllAccountBook(accountBookId?: string, skipCount?: number, maxResultCount?: number): Promise<any> {
+        return request(`/api/app/account-book/account-book?AccountBookId=${accountBookId ?? ''}&SkipCount=${skipCount ?? 0}&MaxResultCount=${maxResultCount ?? 100}`, 'GET');
     }
 }
 

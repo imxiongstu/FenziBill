@@ -35,6 +35,12 @@
 			"style": {
 				"navigationBarTitleText": "关系"
 			}
+		},
+		{
+			"path": "pages/accountBookLine/index",
+			"style": {
+				"navigationBarTitleText": "账本明细"
+			}
 		}
 	],
 	"globalStyle": {

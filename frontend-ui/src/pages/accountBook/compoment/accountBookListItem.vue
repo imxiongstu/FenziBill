@@ -1,7 +1,10 @@
 <template>
     <view>
-        <uni-card class="accountbook-list-item">
-            <uni-title type="h1" :title="title"></uni-title>
+        <uni-card class="accountbook-list-item" :title="name" extra="312">
+            <template v-slot:title>
+                <text>f</text>
+            </template>
+            <text class="uni-secondary-color">{{remark}}</text>
             <uni-row>
                 <uni-col span="8">
                     <uni-tag :text="'收入：'+income" type="success" :circle="true"></uni-tag>
@@ -25,9 +28,13 @@ const profit = computed(() => {
 });
 
 const props = defineProps({
-    title: {
+    name: {
         type: String,
         default: '名称',
+    },
+    remark: {
+        type: String,
+        default: '备注',
     },
     income: {
         type: Number,
@@ -41,4 +48,8 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
+.accountbook-list-item:hover {
+    background-color: #f5f5f5;
+    transform: scale(1.05);
+}
 </style>
